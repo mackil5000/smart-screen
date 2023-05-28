@@ -1,9 +1,20 @@
 import React from "react";
 import { JSDOM } from "jsdom";
-import Timetable from "./components/Timetable";
 
 interface MenuData {
   menu: string[];
+}
+
+export default async function Home() {
+  const menu = await getMenu();
+
+  return (
+    <div className="grid grid-cols-2 gap-4 flex-1 grow">
+      <div>
+        <Menu menu={menu} />
+      </div>
+    </div>
+  );
 }
 
 async function getMenu() {
@@ -36,18 +47,3 @@ const Menu = ({ menu }: MenuData) => {
     </>
   );
 };
-
-export default async function Home() {
-  const menu = await getMenu();
-
-  return (
-    <div className="grid grid-cols-2 gap-4 flex-1 grow">
-      <div>
-        <Menu menu={menu} />
-      </div>
-      <div>
-        <Timetable />
-      </div>
-    </div>
-  );
-}
