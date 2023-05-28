@@ -1,6 +1,6 @@
 import React from "react";
 import { JSDOM } from "jsdom";
-import Timetable from "./components/Timetable";
+import Timetable from "./components/timetable";
 
 interface MenuData {
   menu: string[];
