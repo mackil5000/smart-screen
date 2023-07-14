@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { JSDOM } from "jsdom";
-import Timetable from "./components/Timetable";
-
+import Timetable from "./components/timetable/Timetable";
+import Visitors from "./components/Visitors";
 interface MenuData {
   menu: string[];
 }
@@ -24,28 +24,44 @@ async function getMenu() {
 }
 
 const Menu = ({ menu }: MenuData) => {
-  return (
-    <>
-      {menu.map((s, i) =>
-        !(i % 2) ? (
-          <h3 className="font-bold">{s}</h3>
-        ) : (
-          <p className="indent-2">{s}</p>
-        )
-      )}
-    </>
-  );
+  const heading = (s: string) => <h3 className="font-bold">{s}</h3>;
+  const desc = (s: string) => <p className="indent-2">{s}</p>;
+  return <>{menu.map((s, i) => (!(i % 2) ? heading(s) : desc(s)))}</>;
 };
 
 export default async function Home() {
   const menu = await getMenu();
 
   return (
-    <div className="grid grid-cols-2 gap-4 flex-1 grow">
-      <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: 40,
+        justifyContent: "space-evenly",
+      }}
+    >
+      <div
+        className="p-2"
+        style={{
+          backdropFilter: "blur(10px)",
+          boxShadow: "0px 0px 40px #00000024",
+        }}
+      >
+        <img src="https://baconmockup.com/300/300" alt="" />
+        <h2>This weeks Carnex lunch menu</h2>
         <Menu menu={menu} />
       </div>
-      <div>
+      <Visitors />
+      <div
+        className="p-2"
+        style={{
+          backdropFilter: "blur(10px)",
+          boxShadow: "0px 0px 40px #00000024",
+        }}
+      >
+        <h2>Departures from Krusegränd</h2>
+        {/* @ts-expect-error */}
         <Timetable />
       </div>
     </div>
